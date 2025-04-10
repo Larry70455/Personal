@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larry Schrimpf - Resume</title>
+
+    <!-- React Libraries via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel Standalone for JSX Transpilation in Browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+        :root {
+            --royal-purple: #5A4FCF; /* A slightly softer royal purple */
+            --baby-blue: #A0D2DB;
+            --dark-text: #333;
+            --light-text: #f8f9fa;
+            --background-light: #ffffff;
+            --background-medium: #f1f3f5;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-medium);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        #root {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: var(--background-light);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden; /* Keeps child elements contained */
+        }
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, var(--royal-purple), #7a6ee5); /* Gradient effect */
+            color: var(--light-text);
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0 0 5px 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        .header .contact-info p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+        .header .contact-info a {
+            color: var(--baby-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .header .contact-info a:hover {
+            color: var(--light-text);
+        }
+        .header .relocation {
+            font-style: italic;
+            margin-top: 15px;
+            font-weight: 300;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 25px 40px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section h2 {
+            color: var(--royal-purple);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--baby-blue);
+            font-weight: 700;
+        }
+
+        /* Experience Styling */
+        .job {
+            margin-bottom: 25px;
+        }
+        .job:last-child {
+            margin-bottom: 0;
+        }
+        .job-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 3px;
+        }
+        .job-company-location {
+            font-size: 1.1em;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 3px;
+        }
+        .job-dates {
+            font-size: 1em;
+            font-style: italic;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        .job ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 5px;
+        }
+        .job li {
+            margin-bottom: 8px;
+        }
+
+        /* Skills Styling */
+        .skills-list {
+            list-style: none;
+            padding: 0;
+        }
+        .skills-list li {
+            background-color: var(--background-medium);
+            border: 1px solid var(--baby-blue);
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin-bottom: 8px;
+            display: inline-block; /* Makes them flow like tags */
+            margin-right: 8px;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+         .skills-list li:hover {
+            background-color: var(--royal-purple);
+            color: var(--light-text);
+            border-color: var(--royal-purple);
+         }
+        .skills-category {
+            font-weight: 700;
+            color: var(--royal-purple);
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+
+        /* Education Styling */
+        .education-entry {
+            margin-bottom: 15px;
+        }
+        .education-entry:last-child {
+            margin-bottom: 0;
+        }
+        .degree {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+        .institution, .completion-date {
+            font-size: 1em;
+            color: #555;
+        }
+
+        /* Image Section Styling */
+        .image-section {
+            text-align: center;
+            padding: 30px 40px;
+            background-color: var(--background-medium); /* Different background */
+        }
+        .image-section h3 {
+             color: var(--royal-purple);
+             margin-bottom: 20px;
+             font-size: 1.4em;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: space-around; /* Distribute space */
+            gap: 15px; /* Space between images */
+        }
+        .image-gallery img {
+            max-width: 100%; /* Make images responsive */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-height: 150px; /* Limit height for consistency */
+            object-fit: cover; /* Cover the area nicely */
+             border: 2px solid var(--baby-blue);
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            body {
+                font-size: 15px; /* Slightly smaller base font for mobile */
+            }
+            #root {
+                margin: 10px;
+                border-radius: 0;
+            }
+            .header {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+             .section {
+                padding: 20px;
+            }
+             .section h2 {
+                font-size: 1.5em;
+            }
+            .image-gallery img {
+                 max-height: 120px;
+            }
+            .skills-list li {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+        }
+
+         @media (max-width: 480px) {
+             .header .contact-info p {
+                font-size: 1em;
+            }
+            .job-title {
+                font-size: 1.15em;
+            }
+             .job-company-location {
+                 font-size: 1em;
+             }
+         }
+
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel"> // Crucial: type="text/babel"
+
+        const App = () => {
+            // Resume data (copied from refined version)
+            const resumeData = {
+                name: "Larry Schrimpf",
+                contact: {
+                    address: "Moore, OK 73160",
+                    email: "larry.schrimpfff@gmail.com",
+                    phone: "(405) 404-4737",
+                },
+                relocation: "Willing to relocate to: Inland Empire, CA",
+                authorization: "Authorized to work in the US for any employer",
+                summary: "Results-driven Sales Application Engineer with 6+ years of experience progressing from technical support and production roles into technical sales and system design within the chemical industry (Chlorine Dioxide). Proven ability to translate complex technical requirements into practical, economically viable application solutions for customers in agriculture and other sectors. Adept at problem-solving, customer relationship building, and driving product improvements, including technical revisions impacting >$400k in annual sales and contributing to patent-pending application systems. Seeking a challenging technical sales or application engineering role where I can leverage my expertise in chemical application systems, PCB design, and customer support.",
+                experience: [
+                    {
+                        title: "Sales Application Engineer",
+                        company: "Kemin Industries, Inc.",
+                        location: "Remote",
+                        dates: "October 2024 – Present",
+                        note: "(Title transitioned from Technical Sales Account Manager to better reflect duties)",
+                        description: [
+                            "Collaborate closely with customers, end-users, and distributors to identify needs and develop tailored water sanitization solutions using Chlorine Dioxide (e.g., Pro-Oxine AH).",
+                            "Design and develop cost-effective, customized chemical application systems, including PCB-based alternatives to traditional PLC systems, enhancing value for the agriculture sector.",
+                            "Develop novel application system concepts and contribute technical expertise to systems currently in the patent-pending process.",
+                            "Provide comprehensive technical support, troubleshooting, and training for Kemin's application systems and associated chemical products.",
+                            "Serve as a technical liaison between customers, sales, engineering, and production teams to ensure effective solution delivery."
+                        ]
+                    },
+                     {
+                        title: "Technical Sales Account Manager",
+                        company: "Kemin Industries, Inc. (Post-Acquisition of Bio-Cide Intl.)",
+                        location: "Norman, OK",
+                        dates: "May 2021 – October 2024",
+                        description: [
+                            "Expanded responsibilities post-acquisition to encompass direct sales support, R&D collaboration, and technical trial leadership.",
+                            "Led multiple technical product revisions through to market completion, significantly enhancing product performance and user experience (> $400k annual sales impact).",
+                            "Designed custom circuits and contributed significantly to the development of patentable application equipment.",
+                            "Successfully planned and executed multiple demonstration trials with key industry integrators to showcase system capabilities.",
+                            "Managed technical relationships and provided high-level support for key accounts."
+                        ]
+                    },
+                    {
+                        title: "Technical Solutions Specialist",
+                        company: "Bio-Cide Intl.",
+                        location: "Norman, OK",
+                        dates: "March 2018 – May 2021",
+                        description: [
+                             "Acted as a key liaison between the Fabrication Shop, Sales, and customers to define requirements and create custom chemical delivery systems.",
+                            "Provided comprehensive installation, troubleshooting, and repair support for application systems, both remotely and in-person.",
+                            "Collaborated with the Fabrication Shop to develop and refine PLC, controller, and non-electric chemical delivery solutions.",
+                            "Trained end-users on the proper operation, maintenance, and safety procedures for Bio-Cide's systems and chemicals.",
+                            "Managed and audited internal technical documents, policies, and procedures to ensure compliance with ISO 9001 standards.",
+                            "Provided internal technical support for IT infrastructure, communication systems, and office equipment.",
+                            "Led an internal digitization project, implementing software automation to create a searchable archive of technical documentation."
+                        ]
+                    },
+                    {
+                        title: "Pharmaceutical Production Tech II",
+                        company: "Avara Pharmaceutical Services",
+                        location: "Norman, OK",
+                        dates: "January 2015 – December 2017",
+                        description: [
+                            "Operated within an FDA-regulated cGMP and ISO 9001 environment, ensuring adherence to strict quality and documentation standards.",
+                            "Managed hazardous material handling, inventory control, and documentation review (per cGMP guidelines).",
+                            "Supported critical production areas (Weighing, Film Coating), performing equipment setup, operation, and preventative maintenance/repairs.",
+                            "Contributed to Lean Manufacturing initiatives by taking ownership of process steps and identifying areas for improvement."
+                        ]
+                    },
+                    // Add older roles if desired, keeping them brief
+                    // { title: "Roughneck", company: "Winter Creek Drilling LLC", dates: "Jan 2013 – Dec 2014", description: ["Operated/maintained equipment, sample gathering, inventory management, heavy equipment operation."] },
+                    // { title: "Inventory Management Specialist", company: "Walmart", dates: "Jan 2012 – Jan 2013", description: ["Managed receiving dock operations, inventory tracking, equipment operation."] }
+                ],
+                 education: [
+                    { degree: "Associate in Computer Science", institution: "Oklahoma City Community College", completionDate: "May 2021" },
+                    { degree: "High School Diploma (GED)", institution: "GED", completionDate: "February 2013" }
+                ],
+                skills: {
+                    technical: ["Chlorine Dioxide Application Systems (Pro-Oxine AH)", "Water Sanitization", "Chemical Handling & Safety (FDA/EPA)", "Application System Design & Installation", "Equipment Troubleshooting & Repair (Pumps, PLC, Controllers)", "ISO 9001 Compliance", "cGMP Principles", "Technical Support"],
+                    softwareDesign: ["PCB Design (Altium, EasyEDA, KiCAD)", "Circuit Schematics", "Microsoft Office Suite", "Basic IT Support"],
+                    salesCustomer: ["Technical Sales Support", "Application Engineering", "Customer Needs Assessment", "Solution Development", "End-User Training", "Technical Documentation & Writing", "Problem Solving"],
+                    languages: ["English (Native)", "Spanish (Intermediate)"],
+                    other: ["Valid Driver’s License (Clean Record, >16k mi/yr)", "Extensive Travel Experience"]
+                },
+                // --- Placeholder Image URLs ---
+                // **IMPORTANT**: Replace these with actual image URLs you have rights to use,
+                // or generic royalty-free images representing your work.
+                // Searching "chlorine dioxide application system agriculture", "poultry water treatment" might yield ideas.
+                images: [
+                     "https://www.kemin.com/content/dam/kemin/kemin-industries/images/tiles/pro-oxine-product-tile.jpg", // Placeholder: Pro-Oxine product image
+                     "https://www.kemin.com/content/dam/kemin/kemin-industries/images/blog-images/kemin-animal-nutrition-health-north-america/blog-post-na-en-animal-markets-poultry-pro-oxine-water-treatment-program-for-poultry.jpg", // Placeholder: Poultry water treatment context
+                     "https://www.kemin.com/content/dam/kemin/kemin-industries/images/icons/animal-nutrition-and-health/pro-oxine-ah-product-page-icons/application-systems.png", // Placeholder: Application system icon/concept
+                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6d1aT5bL5lY8xG5eYf9X-Nf2oV5sF8Z-Q7w&usqp=CAU" // Placeholder: Generic PCB image
+                ]
+            };
+
+            return (
+                <React.Fragment>
+                    <Header data={resumeData} />
+                    <Section title="Professional Summary">
+                        <p>{resumeData.summary}</p>
+                    </Section>
+
+                    <Section title="Work Experience">
+                        {resumeData.experience.map((job, index) => (
+                            <Job key={index} data={job} />
+                        ))}
+                    </Section>
+
+                     <ImageSection images={resumeData.images} />
+
+                    <Section title="Skills">
+                        <Skills data={resumeData.skills} />
+                    </Section>
+
+                    <Section title="Education">
+                         {resumeData.education.map((edu, index) => (
+                            <Education key={index} data={edu} />
+                         ))}
+                    </Section>
+
+                </React.Fragment>
+            );
+        };
+
+        // --- Components ---
+
+        const Header = ({ data }) => (
+            <div className="header">
+                <h1>{data.name}</h1>
+                <div className="contact-info">
+                    <p>{data.contact.address} | <a href={`tel:${data.contact.phone}`}>{data.contact.phone}</a> | <a href={`mailto:${data.contact.email}`}>{data.contact.email}</a></p>
+                </div>
+                <p className="relocation">{data.relocation} | {data.authorization}</p>
+            </div>
+        );
+
+        const Section = ({ title, children }) => (
+            <div className="section">
+                <h2>{title}</h2>
+                {children}
+            </div>
+        );
+
+        const Job = ({ data }) => (
+            <div className="job">
+                <div className="job-title">{data.title}</div>
+                <div className="job-company-location">{data.company} - {data.location}</div>
+                <div className="job-dates">{data.dates}</div>
+                {data.note && <div style={{ fontStyle: 'italic', fontSize: '0.9em', marginBottom: '10px' }}>{data.note}</div>}
+                <ul>
+                    {data.description.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+
+        const Education = ({ data }) => (
+             <div className="education-entry">
+                 <div className="degree">{data.degree}</div>
+                 <div className="institution">{data.institution}</div>
+                 <div className="completion-date">{data.completionDate}</div>
+             </div>
+         );
+
+        const Skills = ({ data }) => (
+            <div>
+                <div className="skills-category">Technical:</div>
+                <ul className="skills-list">
+                    {data.technical.map((skill, index) => <li key={index}>{skill}</li>)}
+                </ul>
+                 <div className="skills-category">Software & Design:</div>
+                 <ul className="skills-list">
+                    {data.softwareDesign.map((skill, index) => <li key={index}>{skill}</li>)}
+                </ul>
+                <div className="skills-category">Sales & Customer Support:</div>
+                 <ul className="skills-list">
+                    {data.salesCustomer.map((skill, index) => <li key={index}>{skill}</li>)}
+                </ul>
+                 <div className="skills-category">Languages & Other:</div>
+                 <ul className="skills-list">
+                     {data.languages.map((skill, index) => <li key={index}>{skill}</li>)}
+                     {data.other.map((skill, index) => <li key={index}>{skill}</li>)}
+                </ul>
+            </div>
+        );
+
+         const ImageSection = ({ images }) => (
+            <div className="section image-section">
+                <h3>Relevant Technologies & Applications</h3>
+                <div className="image-gallery">
+                    {images.map((imgSrc, index) => (
+                        <img key={index} src={imgSrc} alt={`Relevant technology image ${index + 1}`} />
+                    ))}
+                </div>
+            </div>
+         );
+
+
+        // Render the App component to the DOM
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+
+    </script>
+
+</body>
+</html>
